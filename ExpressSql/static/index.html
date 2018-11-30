@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <!--
+    <script src="/socket.io/socket.io.js"></script>
+    -->
+</head>
+<body>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <h1> Chat Application</h1>
+        <br>
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name">
+
+        <label for="messages">Messages</label>
+        <textarea name="messages" id="messages" cols="30" rows="10" class="form-control"></textarea>
+
+        <button id="send" class="btn btn-success">Send</button>
+
+    </div>
+    <div id="outputMessages">
+
+    </div>
+</div>
+
+
+<script>
+//    let socket = io();
+    $(() => {
+        $("#send").click(() => {
+            let message = {name: $('#name').val(), message: $('#messages').val()};
+            addMessages(message)
+        });
+
+        function addMessages(message) {
+            $('#outputMessages').append(`<h4>Name : ${message.name} , Message: ${message.message}</h4>`)
+
+        }
+/*
+        function geMessages() {
+            $.get('/api, (data)=>{
+                console.log(data);
+                data.forEach(addMessages);
+        }
+        */
+    })
+
+</script>
+</body>
+</html></html>
