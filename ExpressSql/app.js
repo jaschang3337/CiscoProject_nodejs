@@ -33,6 +33,8 @@ connection.query('SELECT * FROM USER', function (error, results, fields) {
     });
 });
 
+connection.end();
+
 let user_data  = new Array();
 let user_roledata  = new Array();
 
@@ -45,6 +47,26 @@ app.get('/api', router.getAllMessages);
 app.get('/api/messages/:name', router.myGetSpecificUserHandler);
 
 app.get('/api/user', function(req, res){
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    let connection = mysql.createConnection({
+        host     : 'localhost',
+        database : 'testdb',
+        user     : 'root',
+        password : 'Poro04ty!',
+        insecureAuth : true
+//    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+    });
+
+    connection.connect(function(err) {
+        if (err) {
+            console.error('Error connecting: ' + err.stack);
+            return;
+        }
+
+        console.log('Connected as id ' + connection.threadId);
+    });
+
     connection.query('SELECT * FROM USER', function (error, results, fields) {
         if (error)
             throw error;
@@ -62,14 +84,36 @@ app.get('/api/user', function(req, res){
 });
 
 app.get('/api/user_role_map', function(req,res){
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    let connection = mysql.createConnection({
+        host     : 'localhost',
+        database : 'testdb',
+        user     : 'root',
+        password : 'Poro04ty!',
+        insecureAuth : true
+//    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+    });
+
+    connection.connect(function(err) {
+        if (err) {
+            console.error('Error connecting: ' + err.stack);
+            return;
+        }
+
+        console.log('Connected as id ' + connection.threadId);
+    });
+
     connection.query('SELECT * FROM USER_ROLE_MAP', function (error, results, fields) {
         if (error)
             throw error;
 
         results.forEach(result => {
-            console.log(result);
-
+            user_role_data.push(result)
         });
+        console.log(user_role_data);
+        connection.end();
+        res.json(user_data);
+        res.send();
     });
 
 
